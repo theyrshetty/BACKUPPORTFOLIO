@@ -1,23 +1,4 @@
-/* floating-icons.js
-   Injects a subtle floating layer of your instrument SVGs into any
-   section marked with [data-floating-icons], with a mouse-parallax
-   interaction. Skips anything you don't mark (e.g. gallery, sideb).
-
-   Usage:
-   1. Add data-floating-icons to the root element of about.html,
-      contact.html, experience.html, extras.html, projects.html,
-      research.html. Do NOT add it to gallery.html or sideb.html.
-   2. Include this script + floating-icons.css on the page.
-   3a. If your sections are already in the DOM on page load, it will
-       auto-run on DOMContentLoaded.
-   3b. If sections are fetched/injected dynamically (looks like your
-       main.js loads sections/*.html on demand), call
-       window.initFloatingIcons(containerEl) right after you insert
-       the new section's HTML into the page.
-*/
-
 (function () {
-  // Adjust the path prefix if your pages sit in a subfolder.
   const ICONS = [
     'assets/guitar-amp-svgrepo-com.svg',
     'assets/guitar-instrument-electric-flying-v-svgrepo-com.svg',
@@ -36,17 +17,28 @@
     return Math.random() * (max - min) + min;
   }
 
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const state = entry.target._floatingIconsState;
+      if (!state) return;
+      if (entry.isIntersecting && !state.running) {
+        state.running = true;
+        state.rafId = requestAnimationFrame(state.tick);
+      } else if (!entry.isIntersecting && state.running) {
+        state.running = false;
+        cancelAnimationFrame(state.rafId);
+      }
+    });
+  }, { rootMargin: '100px' });
+
   function createLayer(section) {
     if (!section || section.querySelector(':scope > .floating-icons-layer')) return;
 
     const layer = document.createElement('div');
     layer.className = 'floating-icons-layer';
 
-    // Jittered grid: pick a grid roomy enough for the icon count, then
-    // place one icon per cell with a random offset so coverage is even
-    // instead of clumping in random spots.
     const count = Math.floor(rand(40, 50));
-    const cols = Math.ceil(Math.sqrt(count * (16 / 9))); // bias wider than tall
+    const cols = Math.ceil(Math.sqrt(count * (16 / 9)));
     const rows = Math.ceil(count / cols);
     const cellW = 100 / cols;
     const cellH = 100 / rows;
@@ -57,7 +49,6 @@
         cells.push({ c, r });
       }
     }
-    // Shuffle so which cells get skipped (if cells > count) is random.
     for (let i = cells.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [cells[i], cells[j]] = [cells[j], cells[i]];
@@ -69,8 +60,6 @@
       const src = ICONS[Math.floor(Math.random() * ICONS.length)];
       const cell = cells[i];
 
-      // Random position within the cell, with a small margin so icons
-      // don't sit flush against the cell edge.
       const left = cell.c * cellW + rand(cellW * 0.15, cellW * 0.85);
       const top = cell.r * cellH + rand(cellH * 0.15, cellH * 0.85);
 
@@ -93,7 +82,7 @@
 
       icons.push({
         el: wrap,
-        depth: rand(0.02, 0.09), // how strongly this icon reacts to the cursor
+        depth: rand(0.02, 0.09),
         tx: 0,
         ty: 0,
       });
@@ -122,7 +111,10 @@
       targetY = 0;
     });
 
-    function tick() {
+    const state = { running: false, rafId: 0, tick: null };
+
+    state.tick = function tick() {
+      if (!state.running) return;
       icons.forEach((icon) => {
         const goalX = active ? targetX * icon.depth : 0;
         const goalY = active ? targetY * icon.depth : 0;
@@ -130,14 +122,15 @@
         icon.ty += (goalY - icon.ty) * 0.06;
         icon.el.style.transform = `translate3d(${icon.tx.toFixed(2)}px, ${icon.ty.toFixed(2)}px, 0)`;
       });
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+      state.rafId = requestAnimationFrame(state.tick);
+    };
+
+    section._floatingIconsState = state;
+    visibilityObserver.observe(section);
   }
 
   function initFloatingIcons(root) {
     const scope = root || document;
-    // If root itself is a marked section, wire it up directly.
     if (scope.matches && scope.matches('[data-floating-icons]')) {
       createLayer(scope);
     }

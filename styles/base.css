@@ -168,6 +168,20 @@ body.is-loaded .site-loader{ opacity: 0; visibility: hidden; pointer-events: non
   margin-bottom: 1.5rem;
 }
 
+.side {
+  position: relative;
+}
+
+.side--side-a {
+  background: var(--paper);
+  z-index: 1;
+}
+
+.side--side-b {
+  background: var(--ink);
+  z-index: 2;
+}
+
 footer{
   padding: 2rem clamp(1.25rem, 6vw, 5rem) 3rem;
   font-family: var(--font-mono);
@@ -223,12 +237,6 @@ footer{
     top: 2rem;
     gap: 0.65rem;
   }
-}
-
-footer > span:first-child{
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--ink);
 }
 
 footer > span:first-child{

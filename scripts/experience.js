@@ -38,7 +38,7 @@
   }
 
   // Normal case: loader.js fires this once all sections/*.html are injected.
-  document.addEventListener('sections:ready', initExperienceTimeline);
+  document.addEventListener('sections:ready', initExperienceTimeline, { once: true });
 
   // Fallback: if this script somehow loads after the event already fired
   // (e.g. loaded lazily, or on a page that doesn't use loader.js at all),

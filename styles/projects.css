@@ -1,7 +1,6 @@
 #projects {
     position: relative;
     z-index: 2;
-    height: 430vh;
     overflow: clip;
     background: var(--paper);
     color: var(--ink);
@@ -69,6 +68,8 @@
 .projects__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .projects__link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.48rem 0.85rem; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); font: 600 0.82rem 'Short Stack', cursive; text-decoration: none; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
 .projects__link:hover, .projects__link:focus-visible { background: var(--ink); color: var(--paper); transform: translateY(-2px); outline: none; }
+.projects__card--placeholder { opacity: 0.5; pointer-events: none; border-style: dotted; }
+.projects__card--placeholder .projects__title { font-style: italic; }
 .projects__card--research { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .projects__card--research .projects__clip { color: var(--paper); }
 .projects__card--research .projects__tag { border-color: var(--paper); }

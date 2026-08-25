@@ -1,24 +1,25 @@
-(function () {
+function initExtras() {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var section = document.getElementById('extras');
+  if (!section) return;
+  if (section.dataset.extrasInit === 'true') return;
+  section.dataset.extrasInit = 'true';
+
   var bg = section.querySelector('.extras__parallax-bg');
   var content = section.querySelector('.extras__content');
   var cards = section.querySelectorAll('.extras__card');
 
   if (reduceMotion) return;
 
-  /* Scroll-linked parallax: background drifts slower than the content */
   var ticking = false;
 
   function updateParallax() {
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
-
-    // progress: -1 (section below viewport) to 1 (section above viewport)
     var progress = (rect.top - vh) / (vh + rect.height);
 
-    bg.style.transform = 'translateY(' + (progress * -60) + 'px)';
-    content.style.transform = 'translateY(' + (progress * 24) + 'px)';
+    if (bg) bg.style.transform = 'translateY(' + (progress * -60) + 'px)';
+    if (content) content.style.transform = 'translateY(' + (progress * 24) + 'px)';
 
     ticking = false;
   }
@@ -32,7 +33,6 @@
 
   updateParallax();
 
-  /* Cursor-follow tilt + spotlight per card */
   cards.forEach(function (card) {
     card.addEventListener('mousemove', function (e) {
       var rect = card.getBoundingClientRect();
@@ -55,4 +55,6 @@
       card.style.setProperty('--ry', '0deg');
     });
   });
-})();
+}
+
+document.addEventListener('sections:ready', initExtras, { once: true });

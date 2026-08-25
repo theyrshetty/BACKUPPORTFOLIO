@@ -3,24 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yashas' Portfolio</title>
-    <!-- Favicon -->
+  <title>Yashas Shetty — Portfolio</title>
+  <meta name="description" content="Yashas Shetty — data scientist, machine learning engineer, and musician. Explore projects, research, and the creative B-side." />
+  <meta property="og:title" content="Yashas Shetty — Portfolio" />
+  <meta property="og:description" content="Data science, machine learning, and music. Projects, research, and the creative B-side." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/fav.png">
 
   <!-- p5.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script>
 
   <!-- Fonts -->
-   
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,800;1,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Short+Stack&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  
-  <!-- Styles — one per section -->
+
+  <!-- Styles -->
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/hero.css" />
   <link rel="stylesheet" href="styles/about.css" />
@@ -30,7 +31,6 @@
   <link rel="stylesheet" href="styles/extras.css">
   <link rel="stylesheet" href="styles/contact.css" />
   <link rel="stylesheet" href="styles/floating-icons.css">
-
   <link rel="stylesheet" href="styles/sidenav.css" />
 </head>
 
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <!-- ── Hero ── -->
+  <!-- Hero -->
   <header class="hero" id="top">
     <div id="marble-canvas" aria-hidden="true"></div>
     <div class="hero__glow" aria-hidden="true"></div>
@@ -53,21 +53,16 @@
     <div class="hero__name">
       <h1><span>Yashas</span><span>Shetty</span></h1>
     </div>
-
   </header>
 
-  <!-- ── Nav (injected by loader) ── -->
+  <!-- Nav (injected by sidenav.js) -->
   <div id="nav-placeholder"></div>
 
-  <!-- ── Main content — each div becomes a section ── -->
-  <main id="main">
-    <div id="section-about"></div>
-    <div id="section-experience"></div>
-    <div id="section-projects"></div>
-    <div id="section-sideb"></div>
-    <div id="section-extras"></div>
-    <div id="section-contact"></div>
-  </main>
+  <!-- Main content — populated by loader.js from manifest -->
+  <main id="main"></main>
+
+  <!-- Audio for Side B vinyl (empty src for now) -->
+  <audio id="sideb-audio" preload="none" loop></audio>
 
   <footer>
     <span>Yashas Shetty</span>
@@ -75,7 +70,7 @@
       <span>Last updated on 19th July 2026</span>
       <button type="button" class="footer__back-to-top" aria-controls="top">Back to top</button>
     </div>
-    <span>© Yashas Shetty · Built with p5.js</span>
+    <span>&copy; Yashas Shetty &middot; Built with p5.js</span>
   </footer>
 
   <!-- Scripts -->
@@ -84,23 +79,13 @@
   <script src="scripts/transition.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/sidenav.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/roughjs@4/bundled/rough.js" defer></script> 
   <script src="scripts/floating-icons.js" defer></script>
-
-
 
   <script src="scripts/about.js"></script>
   <script src="scripts/experience.js" defer></script>
   <script src="scripts/projects.js" defer></script>
   <script src="scripts/sideb.js" defer></script>
   <script src="scripts/extras.js" defer></script>
-  <script src="scripts/contact.js" defer></script>  
-
-
+  <script src="scripts/contact.js" defer></script>
 </body>
 </html>
-
-<!-- LOADING SCREEN -->
-<!-- [index.html (line 35)](F:\\BACKUPPORTFOLIO\\index.html:35) — loader markup and initial loading state
-[styles/base.css (line 42)](F:\\BACKUPPORTFOLIO\\styles\\base.css:42) — loader visuals, animation, and reduced-motion support
-[scripts/loader.js (line 40)](F:\\BACKUPPORTFOLIO\\scripts\\loader.js:40) — waits for page assets, then dismisses the loader -->

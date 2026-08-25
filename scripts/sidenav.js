@@ -1,35 +1,26 @@
 /* ============================================
    Side Nav — "Ink Track" scroll-spy navigation
-   Builds itself, no HTML markup changes needed.
-   Edit the SECTIONS array below to add/remove
-   entries (e.g. add 'section-sideb' if you want
-   it in the nav).
+   Data-driven: reads nav labels and colors from
+   data-nav-label / data-nav-color attributes set
+   by loader.js on each .section-slot element.
    ============================================ */
 
 (function () {
-  const SECTIONS = [
-    { id: 'section-about', label: 'About', color: '#b5533c' },        // terracotta
-    { id: 'section-experience', label: 'Experience', color: '#3c6e71' }, // deep teal
-    { id: 'section-projects', label: 'Projects', color: '#2f5f8c' },     // navy
-    { id: 'section-sideb', label: 'B Side', color: '#c1572f' },          // record / gallery
-    { id: 'section-extras', label: 'Extras', color: '#d9a441' },        // cream
-    { id: 'section-education', label: 'Education', color: '#c99a2e' },  // amber/mustard
-    { id: 'section-skills', label: 'Skills', color: '#6a4c93' },        // plum
-    { id: 'section-publications', label: 'Publications', color: '#4a6fa5' }, // slate blue
-    { id: 'section-honors', label: 'Honors', color: '#a63446' },        // ruby
-    { id: 'section-contact', label: 'Contact', color: '#4d724d' },      // olive green
-  ];
-
   const HERO_ID = 'top';
 
   function init() {
-    const items = SECTIONS
-      .map((s) => ({ ...s, el: document.getElementById(s.id) }))
-      .filter((s) => s.el);
+    const slots = Array.from(document.querySelectorAll('.section-slot[data-nav-label]'));
+    const items = slots
+      .map(el => ({
+        id: el.id,
+        label: el.dataset.navLabel,
+        color: el.dataset.navColor || '#1a1a1a',
+        el,
+      }))
+      .filter(s => s.el);
 
     if (items.length === 0) return;
 
-    // ---- build markup ----
     const nav = document.createElement('nav');
     nav.className = 'side-nav';
     nav.setAttribute('aria-label', 'Section navigation');
@@ -47,7 +38,7 @@
       const li = document.createElement('li');
       li.className = 'side-nav__item';
       li.dataset.target = item.id;
-      li.style.setProperty('--dot-color', item.color || 'var(--sn-ink)');
+      li.style.setProperty('--dot-color', item.color);
 
       const label = document.createElement('span');
       label.className = 'side-nav__label';
@@ -79,12 +70,9 @@
     function update() {
       ticking = false;
 
-      // visibility: show once we've scrolled roughly past the hero
       const heroHeight = heroEl ? heroEl.offsetHeight : 0;
       nav.classList.toggle('is-visible', window.scrollY > heroHeight * 0.6);
 
-      // active section: whichever section's top has crossed the
-      // vertical midpoint of the viewport (with a slight offset)
       const midY = window.innerHeight * 0.5;
       let activeIndex = 0;
       items.forEach((item, i) => {
@@ -95,7 +83,6 @@
         li.classList.toggle('is-active', i === activeIndex);
       });
 
-      // fill progress across the span of tracked sections
       const first = items[0].el;
       const last = items[items.length - 1].el;
       const total =
@@ -123,9 +110,5 @@
     update();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  document.addEventListener('sections:ready', init, { once: true });
 })();

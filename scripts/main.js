@@ -1,14 +1,8 @@
-/**
- * main.js
- */
-
 document.addEventListener('sections:ready', () => {
 
-  // ── Footer year ──────────────────────────────────────────
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ── Section fade-in (adds .in-view so CSS animation runs) ──
   const sections = document.querySelectorAll('.section');
   sections.forEach(s => s.classList.add('in-view'));
 
@@ -24,7 +18,6 @@ document.addEventListener('sections:ready', () => {
   );
   sections.forEach(s => sectionObserver.observe(s));
 
-  // ── Active nav highlight on scroll ───────────────────────
   const navLinks = document.querySelectorAll('.nav a[href^="#"]');
   const navObserver = new IntersectionObserver(
     (entries) => {
@@ -43,7 +36,6 @@ document.addEventListener('sections:ready', () => {
   );
   sections.forEach(s => navObserver.observe(s));
 
-  // ── Scroll-reveal for cards ───────────────────────────────
   const revealEls = document.querySelectorAll('.card, .timeline-item, .skill-chip');
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -58,7 +50,6 @@ document.addEventListener('sections:ready', () => {
   );
   revealEls.forEach(el => revealObserver.observe(el));
 
-  // ── Side B / montage lightbox ─────────────────────────────
   initMontage();
 
 });
@@ -86,18 +77,38 @@ function initMontage() {
   const lbCaption = overlay.querySelector('.lightbox__caption');
   const lbClose   = overlay.querySelector('.lightbox__close');
 
+  const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  let previousFocus = null;
+
+  function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const focusable = Array.from(overlay.querySelectorAll(focusableSelector));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
   function openLightbox(src, caption) {
     lbImg.src = src;
     lbImg.alt = caption;
     lbCaption.textContent = caption;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    previousFocus = document.activeElement;
     lbClose.focus();
+    overlay.addEventListener('keydown', trapFocus);
   }
 
   function closeLightbox() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+    overlay.removeEventListener('keydown', trapFocus);
+    if (previousFocus) previousFocus.focus();
   }
 
   lbClose.addEventListener('click', closeLightbox);

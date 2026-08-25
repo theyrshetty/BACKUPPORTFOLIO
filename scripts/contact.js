@@ -40,11 +40,17 @@ function initContactCopyButton() {
   }
 }
 
-if (document.getElementById('contact-copy-btn')) {
-  initContactCopyButton();
-} else {
-  document.addEventListener('sections:ready', initContactCopyButton, { once: true });
+function initContactMarquee() {
+  var track = document.querySelector('.contact__marquee-track');
+  if (track && !track.dataset.doubled) {
+    track.innerHTML += track.innerHTML;
+    track.dataset.doubled = 'true';
+  }
 }
 
-const track = document.querySelector(".contact__marquee-track");
-if (track) track.innerHTML += track.innerHTML;
+function initContact() {
+  initContactCopyButton();
+  initContactMarquee();
+}
+
+document.addEventListener('sections:ready', initContact, { once: true });

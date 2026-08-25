@@ -184,8 +184,3 @@ main {
   will-change: transform, filter;
 }
 
-.hero__name,
-.hero__tagline,
-.hero__scroll {
-  will-change: transform, opacity;
-}

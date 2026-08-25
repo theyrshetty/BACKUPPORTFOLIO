@@ -11,33 +11,21 @@
   --extras-accent: #b3893f;
 }
 
-/* ---------- Slide-over-gallery mechanics ----------
-   Two-layer pattern, same as #section-gallery / .gallery__screen:
-   #section-extras is a tall element in normal flow (provides scroll
-   distance) with a negative margin-top pulling it up so it begins only
-   during the final 20% of the gallery viewport. .extras__screen is the
-   actual sticky/pinned layer inside it that holds the background+content
-   fixed at top:0 while #section-extras scrolls past underneath it. */
 /* extras.css */
 #extras {
   position: relative;
   z-index: 4;
-  height: 200vh;
-  margin-top: -20vh;
+  width: 100%;
 }
 
 .extras__screen {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  min-height: 100vh;
   overflow: hidden;
-  background: var(--extras-bg);
+  background: linear-gradient(to bottom, #12110f 0%, var(--extras-bg) 18%);
   display: flex;
   align-items: center;
-}
-
-#extras {
-  width: 100%;
+  padding: 5rem 0;
 }
 
 .extras {
@@ -268,14 +256,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #section-extras {
-    height: auto;
-    margin-top: 0;
-  }
-
   .extras__screen {
-    position: relative;
-    height: auto;
+    padding: 3rem 0;
   }
 
   .extras__grid:hover .extras__card:not(:hover) {

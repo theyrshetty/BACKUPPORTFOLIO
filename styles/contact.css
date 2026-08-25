@@ -20,23 +20,17 @@
 #contact {
   position: relative;
   z-index: 5;
-  height: 200vh;
-  margin-top: -60vh;
-  margin-bottom: 0;
-  padding-bottom: 0;
+  width: 100%;
 }
 
 .contact__screen {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  min-height: 100vh;
   overflow: hidden;
   background: var(--contact-bg);
   display: flex;
   align-items: center;
-}
-#contact {
-  width: 100%;
+  padding: 5rem 0;
 }
 
 .contact-section {
@@ -95,12 +89,6 @@
   content: "\2022"; /* bullet */
   color: var(--contact-emerald-soft);
   margin-left: 2.5rem;
-}
-
-@keyframes marquee{
-    to{
-        transform:translateX(-50%);
-    }
 }
 
 @keyframes marquee-scroll {
@@ -287,14 +275,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #section-contact {
-    height: auto;
-    margin-top: 0;
-  }
-
   .contact__screen {
-    position: relative;
-    height: auto;
+    padding: 3rem 0;
   }
 
   .contact__marquee-track {

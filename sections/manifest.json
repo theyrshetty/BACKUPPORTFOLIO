@@ -1,0 +1,29 @@
+{
+  "sides": [
+    {
+      "id": "side-a",
+      "label": "Side A",
+      "sections": [
+        { "id": "about", "file": "about.html", "nav": { "label": "About", "color": "#b5533c" } },
+        { "id": "experience", "file": "experience.html", "nav": { "label": "Experience", "color": "#3c6e71" } },
+        { "id": "projects", "file": "projects.html", "nav": { "label": "Projects", "color": "#2f5f8c" } }
+      ]
+    },
+    {
+      "id": "side-b",
+      "label": "Side B",
+      "sections": [
+        { "id": "sideb", "file": "sideb.html", "nav": { "label": "B Side", "color": "#c1572f" } },
+        { "id": "extras", "file": "extras.html", "nav": { "label": "Beyond", "color": "#d9a441" } },
+        { "id": "contact", "file": "contact.html", "nav": { "label": "Contact", "color": "#4d724d" } }
+      ]
+    }
+  ],
+  "photos": [
+    "assets/portrait.jpeg", "assets/babitha.jpeg",
+    "assets/i1.jpeg", "assets/i2.jpeg", "assets/i3.JPEG", "assets/i4.JPEG",
+    "assets/i5.jpeg", "assets/i6.jpeg", "assets/i7.JPEG", "assets/i8.jpeg",
+    "assets/i9.JPEG", "assets/i10.PNG", "assets/i11.JPEG", "assets/i12.PNG",
+    "assets/i13.PNG", "assets/i14.jpg", "assets/i15.PNG"
+  ]
+}

@@ -1,11 +1,11 @@
 #sideb {
     position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
 .sideb__stage-wrapper {
     position: relative;
-    height: 300vh;
+    height: 600vh;
 }
 
 .sideb__stage {
@@ -35,10 +35,6 @@
     white-space: nowrap;
 }
 
-/* ============================================================
-   CURVED "SIDE B" BANNER — sits outside the disc, doesn't spin
-   with it, letters arced along a shared pivot point below them.
-   ============================================================ */
 .sideb__label-curve {
     position: absolute;
     top: 4%;
@@ -66,28 +62,71 @@
     color: var(--ink);
 }
 
-/* ============================================================
-   VINYL — rises + spins based on scroll progress, driven by
-   scripts/sideb.js (transform is set directly per-frame, no
-   CSS transition, so it stays locked to the scrollbar).
-   ============================================================ */
+/* ── Background fade ── */
+.sideb__bg-fade {
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    will-change: opacity;
+    transition: opacity 700ms ease;
+}
+.sideb__bg-fade--off { opacity: 0; }
+
+/* ── Cover ── */
+.sideb__cover {
+    position: absolute;
+    z-index: 6;
+    width: min(76vw, 560px);
+    aspect-ratio: 1;
+    background: linear-gradient(160deg, #2b2b2b, #0d0d0d);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform, opacity;
+    transition: transform 800ms ease-out, opacity 600ms ease;
+}
+.sideb__cover--off {
+    transform: translate(120vw, 0) rotate(8deg);
+    opacity: 0;
+}
+
+.sideb__cover-stamp {
+    font-family: 'Short Stack', cursive;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    letter-spacing: 0.12em;
+    color: var(--paper);
+    border: 3px solid var(--paper);
+    padding: 0.4em 0.9em;
+    transform: rotate(-4deg);
+}
+
+/* ── Vinyl ── */
 .sideb__vinyl {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
     will-change: transform, opacity;
     pointer-events: none;
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity 600ms ease, transform 1500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sideb__vinyl--revealed {
+    opacity: 1;
+}
+.sideb__vinyl--settled {
+    transform: translate(var(--settle-tx, 0px), var(--settle-ty, 0px)) scale(var(--settle-scale, 1));
 }
 
-/* ============================================================
-   VINYL ASSEMBLY — shared container sized exactly to the disc.
-   Both the disc and the tonearm are positioned relative to THIS
-   box (not the stage), so the tonearm's pivot and needle tip
-   scale and track the disc's real edge at any viewport size.
-   ============================================================ */
+.sideb__vinyl--slow-spin .sideb__vinyl-disc {
+    animation: vinyl-spin 8s linear infinite;
+}
+
 .sideb__vinyl-assembly {
     position: relative;
     width: min(76vw, 560px);
@@ -118,7 +157,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: var(--paper); /* shows briefly only until the image loads */
+    background: var(--paper);
 }
 
 .sideb__vinyl-label-img {
@@ -130,7 +169,7 @@
 }
 
 .sideb__vinyl-label-fallback {
-    display: none; /* revealed only via the img's onerror handler */
+    display: none;
     font-family: 'Short Stack', cursive;
     font-size: clamp(0.85rem, 2vw, 1.15rem);
     letter-spacing: 0.06em;
@@ -149,28 +188,19 @@
     background: var(--ink);
 }
 
-/* ============================================================
-   TONEARM — positioned as a percentage of the vinyl-assembly
-   box (matches disc scaling 1:1). The <g> pivots around the
-   circle's exact center (46,10 in the SVG's own viewBox
-   coordinates) via transform-box: view-box, so rotation reads
-   as a real hinge instead of spinning around a bounding box.
-
-   Starts fully transparent — scripts/sideb.js fades it in as
-   the sleeve finishes sliding off, so it isn't visible sitting
-   on top of the cover before the record is even revealed.
-   ============================================================ */
+/* ── Tonearm ── */
 .sideb__tonearm {
     position: absolute;
-    top: -6%;
-    right: -12%;
-    width: 32%;
+    top: 2%;
+    right: -2%;
+    width: 28%;
     height: auto;
     color: var(--paper);
-    opacity: 0; /* revealed by scripts/sideb.js once the sleeve has slid off */
+    opacity: 0;
     z-index: 2;
-    transition: color 0.6s ease;
+    transition: opacity 600ms ease 200ms, color 0.6s ease;
 }
+.sideb__tonearm--visible { opacity: 1; }
 
 .sideb__stage--light .sideb__tonearm {
     color: var(--ink);
@@ -186,80 +216,12 @@
     transform-box: view-box;
     transform-origin: 46px 10px;
     will-change: transform;
+    transform: rotate(-34deg);
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1) 400ms;
 }
+.sideb__tonearm-arm--down { transform: rotate(0deg); }
 
-/* Gallery now lives in gallery.css / gallery.js as its own
-   normal-flow section — see #sideb-photos, right after this
-   section. It can't be pinned inside .sideb__stage because a
-   position:sticky element doesn't move through the viewport,
-   which the gallery's reverse-scroll columns depend on. */
-
-@media (max-width: 900px) {
-    .sideb__stage-wrapper { height: 240vh; }
-    .sideb__tonearm { display: none; }
-    .sideb__label-curve span { font-size: clamp(1.6rem, 8vw, 2.8rem); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .sideb__stage-wrapper { height: auto; }
-    .sideb__stage { position: relative; height: auto; padding: 5rem 1.5rem; }
-    .sideb__vinyl { position: relative; inset: auto; margin-bottom: 3rem; opacity: 1 !important; transform: none !important; }
-    .sideb__tonearm { opacity: 1 !important; }
-    .sideb__tonearm-arm { transform: rotate(0deg) !important; }
-}
-
-/* ============================================================
-   BACKGROUND FADE-IN — paper crossfades away to reveal the
-   black stage as you scroll in, instead of snapping to black.
-   ============================================================ */
-.sideb__bg-fade {
-    position: absolute;
-    inset: 0;
-    background: var(--paper);
-    will-change: opacity;
-}
-
-/* ============================================================
-   COVER / SLEEVE — the disc slides out from behind this and
-   it slides off-stage as the record settles into the center.
-   ============================================================ */
-.sideb__cover {
-    position: absolute;
-    z-index: 2;
-    width: min(76vw, 560px);
-    aspect-ratio: 1;
-    background: linear-gradient(160deg, #2b2b2b, #0d0d0d);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    will-change: transform, opacity;
-}
-
-.sideb__cover-stamp {
-    font-family: 'Short Stack', cursive;
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    letter-spacing: 0.12em;
-    color: var(--paper);
-    border: 3px solid var(--paper);
-    padding: 0.4em 0.9em;
-    transform: rotate(-4deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .sideb__bg-fade { opacity: 0 !important; }
-    .sideb__cover { display: none; }
-}
-
-/* ============================================================
-   SIDE B GALLERY — this is part of the same pinned record scene.
-   Its backdrop remains fixed while sideb.js moves the three rails.
-   ============================================================ */
-.sideb__stage-wrapper { height: 600vh; }
-.sideb__vinyl { z-index: 5; }
-.sideb__cover { z-index: 6; }
-
+/* ── Gallery ── */
 .sideb__gallery {
     position: absolute;
     inset: 0;
@@ -269,7 +231,7 @@
     visibility: hidden;
     pointer-events: none;
     background: #12110f;
-    transition: opacity 180ms linear;
+    transition: opacity 400ms ease;
 }
 .sideb__gallery.is-visible { opacity: 1; visibility: visible; }
 
@@ -289,7 +251,48 @@
 .sideb__gallery .polaroid__photo img { display: block; width: 100%; height: auto; }
 .sideb__gallery .polaroid__photo-fallback { display: none; min-height: 10rem; place-items: center; color: var(--paper); font: 0.72rem var(--font-mono); }
 
-@media (max-width: 900px) { .sideb__stage-wrapper { height: 500vh; } }
+/* ── Spin animation ── */
+@keyframes vinyl-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sideb__vinyl--spinning .sideb__vinyl-disc {
+    animation: vinyl-spin 4.5s linear infinite;
+}
+.sideb__vinyl--paused .sideb__vinyl-disc {
+    animation: vinyl-spin 4.5s linear infinite paused;
+}
+
+/* Mini state — vinyl stays full-size, scaled via transform. Assembly is the click target. */
+.sideb__vinyl--mini .sideb__vinyl-assembly {
+    transition: filter 200ms ease;
+}
+.sideb__vinyl--mini .sideb__vinyl-assembly:hover {
+    filter: brightness(1.15);
+}
+.sideb__vinyl--mini .sideb__tonearm-arm {
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sideb__vinyl--spinning .sideb__tonearm-arm {
+    transform: rotate(0deg) !important;
+}
+.sideb__vinyl--paused .sideb__tonearm-arm {
+    transform: rotate(-34deg) !important;
+}
+
+/* Hidden state (when Side B scrolls off entirely) */
+.sideb__vinyl--hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .sideb__stage-wrapper { height: 500vh; }
+    .sideb__tonearm { display: none; }
+    .sideb__label-curve span { font-size: clamp(1.6rem, 8vw, 2.8rem); }
+}
 @media (max-width: 620px) {
     .sideb__stage-wrapper { height: 430vh; }
     .sideb__gallery-viewport { padding: 0.7rem; }
@@ -297,8 +300,18 @@
     .sideb__gallery-column { gap: 0.55rem; }
     .sideb__gallery .polaroid { padding: 0.18rem; }
 }
+
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
+    .sideb__stage-wrapper { height: auto; }
+    .sideb__stage { position: relative; height: auto; padding: 5rem 1.5rem; }
+    .sideb__vinyl { position: relative; inset: auto; margin-bottom: 3rem; opacity: 1 !important; transform: none !important; }
+    .sideb__tonearm { opacity: 1 !important; }
+    .sideb__tonearm-arm { transform: rotate(0deg) !important; }
+    .sideb__bg-fade { opacity: 0 !important; }
+    .sideb__cover { display: none; }
     .sideb__gallery { position: relative; min-height: 100vh; opacity: 1; visibility: visible; }
     .sideb__gallery-viewport { position: relative; overflow: visible; }
     .sideb__gallery-column { transform: none !important; }
+    .sideb__vinyl--spinning .sideb__vinyl-disc { animation: none !important; }
 }
