@@ -8,7 +8,6 @@ function initExtras() {
   var bg = section.querySelector('.extras__parallax-bg');
   var content = section.querySelector('.extras__content');
   var cards = section.querySelectorAll('.extras__card');
-
   if (reduceMotion) return;
 
   var ticking = false;

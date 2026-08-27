@@ -16,6 +16,8 @@
     overflow: hidden;
 }
 
+  #about .section__heading { color: #b5533c; }
+
 .about {
     max-width: 1300px;
     margin: auto;

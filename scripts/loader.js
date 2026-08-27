@@ -16,8 +16,8 @@ async function loadSection(slot, file) {
 }
 
 function dismissLoader() {
-  document.body.classList.remove('is-loading');
   document.body.classList.add('is-loaded');
+  document.body.classList.remove('is-loading');
   window.setTimeout(() => document.querySelector('.site-loader')?.remove(), 600);
 }
 

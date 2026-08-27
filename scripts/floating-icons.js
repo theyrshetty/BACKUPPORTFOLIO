@@ -1,16 +1,16 @@
 (function () {
   const ICONS = [
-    'assets/guitar-amp-svgrepo-com.svg',
-    'assets/guitar-instrument-electric-flying-v-svgrepo-com.svg',
-    'assets/guitar-pedal-1-svgrepo-com.svg',
-    'assets/guitar-pedal-2-svgrepo-com.svg',
-    'assets/guitar-svgrepo-com (1).svg',
-    'assets/guitar-svgrepo-com.svg',
-    'assets/piano-svgrepo-com.svg',
-    'assets/saxophone-svgrepo-com.svg',
-    'assets/vinyl-svgrepo-com.svg',
-    'assets/violin-2-svgrepo-com.svg',
-    'assets/drums-rhythm-loud-play-band-svgrepo-com.svg',
+    'assets/svgs/guitar-amp-svgrepo-com.svg',
+    'assets/svgs/guitar-instrument-electric-flying-v-svgrepo-com.svg',
+    'assets/svgs/guitar-pedal-1-svgrepo-com.svg',
+    'assets/svgs/guitar-pedal-2-svgrepo-com.svg',
+    'assets/svgs/guitar-svgrepo-com (1).svg',
+    'assets/svgs/guitar-svgrepo-com.svg',
+    'assets/svgs/piano-svgrepo-com.svg',
+    'assets/svgs/saxophone-svgrepo-com.svg',
+    'assets/svgs/vinyl-svgrepo-com.svg',
+    'assets/svgs/violin-2-svgrepo-com.svg',
+    'assets/svgs/drums-rhythm-loud-play-band-svgrepo-com.svg',
   ];
 
   function rand(min, max) {

@@ -3,12 +3,12 @@
 }
 
 :root {
-  --extras-bg: #5c0e28;
-  --extras-cream: #f7ecd9;
-  --extras-surface: #f7ecd9;
-  --extras-border: rgba(247, 236, 217, 0.22);
+  --extras-bg: var(--paper);
+  --extras-cream: var(--ink);
+  --extras-surface: var(--paper);
+  --extras-border: var(--line);
   --extras-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-  --extras-accent: #b3893f;
+  --extras-accent: #d9c48f;
 }
 
 /* extras.css */
@@ -22,7 +22,7 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to bottom, #12110f 0%, var(--extras-bg) 18%);
+  background: var(--paper);
   display: flex;
   align-items: center;
   padding: 5rem 0;
@@ -34,11 +34,18 @@
 }
 
 .extras .section__heading {
-  color: var(--extras-cream);
+  color: #d9a441;
 }
 
 .extras .section__lede {
-  color: rgba(247, 236, 217, 0.75);
+  color: rgba(22, 21, 19, 0.72);
+}
+
+.extras__grid-wrapper {
+  padding: 1.5rem;
+  border-radius: 1.4rem;
+  background: linear-gradient(135deg, rgba(210, 20, 58, 0.08), rgba(204, 85, 0, 0.08), rgba(0, 0, 34, 0.08));
+  border: 1px solid var(--extras-border);
 }
 
 .extras__grid {
@@ -48,8 +55,6 @@
   perspective: 1200px;
 }
 
-/* Dim non-hovered siblings when any card in the grid is hovered, so the
-   active card reads as "lifted out" rather than just moving in place. */
 .extras__grid:hover .extras__card:not(:hover) {
   opacity: 0.55;
   filter: saturate(0.7);
@@ -81,14 +86,15 @@
   will-change: transform;
 }
 
+.extras__card--instagram { --card-accent: #a8102e; --card-accent-soft: rgba(210, 20, 58, 0.14); }
+.extras__card--art       { --card-accent: #cc5500; --card-accent-soft: rgba(204, 85, 0, 0.14); }
+.extras__card--medium    { --card-accent: #000022; --card-accent-soft: rgba(0, 0, 34, 0.14); }
+
 @keyframes card-in {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Cursor-follow spotlight — subtle, tucked to the mouse position via
-   --mx/--my (set by JS on mousemove). Kept low-opacity so it reads as a
-   soft sheen rather than a color wash. */
 .extras__card::before {
   content: "";
   position: absolute;
@@ -96,7 +102,7 @@
   z-index: -1;
   opacity: 0;
   background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
-              rgba(179, 137, 63, 0.12), transparent 70%);
+              var(--card-accent-soft, rgba(179, 137, 63, 0.12)), transparent 70%);
   transition: opacity 260ms ease;
 }
 
@@ -108,7 +114,7 @@
   border-radius: inherit;
   padding: 1px;
   background: conic-gradient(from var(--angle, 0deg),
-              transparent 0deg, var(--extras-bg) 25deg, transparent 60deg);
+              transparent 0deg, var(--card-accent, var(--extras-bg)) 25deg, transparent 60deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -127,13 +133,12 @@
   inherits: false;
 }
 
-/* ---------- Hover state (emphasized) ---------- */
-
 .extras__card:hover,
 .extras__card:focus-visible {
   transform: translateY(-10px) scale(1.035) rotateX(var(--ry, 0)) rotateY(var(--rx, 0));
-  border-color: rgba(92, 14, 40, 0.4);
-  box-shadow: 0 34px 64px rgba(0, 0, 0, 0.5);
+  border-color: var(--card-accent, var(--clay));
+  box-shadow: 0 34px 64px rgba(0, 0, 0, 0.5),
+              0 0 0 1px var(--card-accent-soft, transparent);
   z-index: 2;
   opacity: 1;
   filter: saturate(1);
@@ -154,16 +159,16 @@
   width: 2.7rem;
   height: 2.7rem;
   border-radius: 999px;
-  background: rgba(92, 14, 40, 0.12);
-  color: var(--extras-bg);
+  background: var(--card-accent-soft, rgba(92, 14, 40, 0.12));
+  color: var(--card-accent, var(--extras-bg));
   font-size: 1.1rem;
   transition: transform 380ms cubic-bezier(.2,.8,.2,1), background 240ms ease, color 240ms ease;
 }
 
 .extras__card:hover .extras__icon {
   transform: scale(1.18) rotate(-10deg);
-  background: var(--extras-bg);
-  color: var(--extras-cream);
+  background: var(--card-accent, var(--extras-bg));
+  color: #fff;
 }
 
 .extras__eq {
@@ -178,7 +183,7 @@
 
 .extras__eq span {
   width: 3px;
-  background: rgba(92, 14, 40, 0.35);
+  background: var(--card-accent-soft, rgba(92, 14, 40, 0.35));
   border-radius: 2px;
   animation: eq 1.8s ease-in-out infinite;
   animation-play-state: paused;
@@ -192,7 +197,7 @@
 .extras__card:hover .extras__eq span,
 .extras__card:focus-visible .extras__eq span {
   animation-play-state: running;
-  background: var(--extras-bg);
+  background: var(--card-accent, var(--extras-bg));
 }
 
 @keyframes eq {
@@ -205,15 +210,15 @@
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--extras-bg);
-  opacity: 0.75;
+  color: var(--card-accent, var(--extras-bg));
+  opacity: 0.9;
 }
 
 .extras__card h3 {
   margin: 0;
   font-size: 1.08rem;
   font-family: var(--font-body);
-  color: var(--extras-bg);
+  color: var(--ink, #161513);
 }
 
 .extras__card p {
@@ -228,7 +233,7 @@
   bottom: 1.1rem;
   right: 1.25rem;
   font-family: var(--font-mono);
-  color: var(--extras-bg);
+  color: var(--card-accent, var(--extras-bg));
   opacity: 0;
   transform: translate(-8px, 8px) scale(0.8);
   transition: opacity 280ms ease, transform 280ms cubic-bezier(.2,.8,.2,1);
@@ -239,6 +244,116 @@
   opacity: 1;
   transform: translate(0, 0) scale(1);
 }
+
+.extras__linktree {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+.extras__linktree-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  background: var(--card-accent-soft, rgba(210, 20, 58, 0.14));
+  color: var(--card-accent, #d2143a);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: transform 240ms cubic-bezier(.2,.8,.2,1), background 200ms ease, color 200ms ease;
+}
+
+.extras__linktree-item:hover,
+.extras__linktree-item:focus-visible {
+  background: var(--card-accent, #d2143a);
+  color: #fff;
+  transform: scale(1.12) translateY(-2px);
+}
+
+/* The B-side is a deliberately theatrical exit from the portfolio into the
+   full-screen Three.js visual diary. */
+.extras__bside-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(2rem, 5vw, 4rem);
+}
+
+.extras__bside-link {
+  --bside-amber: #d9a441;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1.25rem, 5vw, 4rem);
+  width: min(100%, 760px);
+  padding: clamp(1.35rem, 3vw, 2rem) clamp(1.4rem, 4vw, 2.8rem);
+  overflow: hidden;
+  border: 1px solid rgba(217, 164, 65, 0.55);
+  border-radius: 999px;
+  background: radial-gradient(circle at 74% 50%, #5c3014 0, #1b120f 30%, #100d0c 72%);
+  box-shadow: 0 16px 36px rgba(45, 26, 10, 0.24);
+  color: #f7f0dc;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 350ms cubic-bezier(.2,.8,.2,1), box-shadow 350ms ease, border-color 250ms ease;
+}
+
+.extras__bside-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 18%, rgba(255, 216, 132, 0.22) 48%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+}
+
+.extras__bside-link:hover,
+.extras__bside-link:focus-visible {
+  transform: translateY(-6px) scale(1.015);
+  border-color: var(--bside-amber);
+  box-shadow: 0 28px 56px rgba(45, 26, 10, 0.38), 0 0 0 5px rgba(217, 164, 65, 0.12);
+}
+
+.extras__bside-link:hover::before,
+.extras__bside-link:focus-visible::before { transform: translateX(120%); }
+
+.extras__bside-copy { display: grid; gap: 0.35rem; }
+.extras__bside-kicker {
+  margin-bottom: 0.45rem;
+  color: var(--bside-amber);
+  font: 0.68rem var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.extras__bside-copy strong {
+  font: 700 clamp(1.55rem, 4vw, 2.6rem)/1.13 var(--font-display, var(--font-body));
+  letter-spacing: 0.025em;
+  word-spacing: 0.18em;
+}
+.extras__bside-copy > span:last-child { color: rgba(247, 240, 220, 0.75); font-size: 0.88rem; }
+
+.extras__vinyl {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  width: clamp(4.8rem, 10vw, 7rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #141312 0 2px, #292624 3px 4px, #10100f 5px 7px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 9px 15px rgba(0,0,0,.45);
+  transition: transform 650ms cubic-bezier(.25,.85,.25,1);
+}
+
+.extras__vinyl::after { content: ""; position: absolute; width: 10%; aspect-ratio: 1; border-radius: 50%; background: #15100b; box-shadow: 0 0 0 2px rgba(242, 211, 135, .2); }
+.extras__vinyl-grooves { position: absolute; inset: 8%; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; box-shadow: 0 0 0 9px rgba(255,255,255,.03), 0 0 0 18px rgba(255,255,255,.03); }
+.extras__vinyl-label { display: grid; z-index: 1; width: 44%; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--bside-amber); color: #21150b; font: 700 0.53rem/0.9 var(--font-mono); letter-spacing: .08em; text-align: center; }
+.extras__vinyl-shine { position: absolute; inset: 9%; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,.22), transparent 30% 68%, rgba(255,255,255,.08)); }
+.extras__bside-link:hover .extras__vinyl, .extras__bside-link:focus-visible .extras__vinyl { transform: rotate(360deg) scale(1.08); }
 
 @media (max-width: 900px) {
   .extras__grid {
@@ -253,6 +368,7 @@
   .extras__card {
     padding: 1.05rem;
   }
+  .extras__bside-link { border-radius: 1.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -268,4 +384,6 @@
   .extras__eq span,
   .extras__card::after,
   .extras__card { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .extras__bside-link:hover .extras__vinyl,
+  .extras__bside-link:focus-visible .extras__vinyl { transform: none; }
 }

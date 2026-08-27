@@ -6,7 +6,7 @@
    ========================================================= */
 
 :root {
-  --contact-bg: #f4ecd8;      /* cream */
+  --contact-bg: var(--paper); /* shared section background */
   --contact-emerald: #0b5d3b;
   --contact-emerald-soft: rgba(11, 93, 59, 0.68);
   --contact-emerald-faint: rgba(11, 93, 59, 0.14);
@@ -25,12 +25,12 @@
 
 .contact__screen {
   position: relative;
-  min-height: 100vh;
+  min-height: auto;
   overflow: hidden;
   background: var(--contact-bg);
   display: flex;
   align-items: center;
-  padding: 5rem 0;
+  padding: clamp(3rem, 5vw, 4.5rem) 0 1.5rem;
 }
 
 .contact-section {
@@ -43,10 +43,11 @@
 }
 
 .contact-section .section__eyebrow,
-.contact-section .section__heading,
 .contact-section .section__lede {
   color: var(--contact-emerald);
 }
+
+.contact-section .section__heading { color: #4d724d; }
 
 .contact-section .section__lede {
   color: var(--contact-emerald-soft);
@@ -258,8 +259,6 @@
   color: var(--contact-bg);
   border-color: var(--contact-emerald);
 }
-
-/* ---------- Funky sign-off ---------- */
 
 /* ---------- Responsive ---------- */
 

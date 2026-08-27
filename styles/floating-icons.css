@@ -6,9 +6,13 @@
 .floating-icons-layer {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none; /* layer itself never blocks clicks/scroll */
   z-index: 0;
+}
+
+[data-floating-icons] {
+  overflow: visible !important;
 }
 
 /* Outer wrapper: JS moves this for the mouse-parallax effect */

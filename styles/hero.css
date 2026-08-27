@@ -19,7 +19,20 @@
   pointer-events: none;
   opacity: 0;
   transform: scale(1.06);
-  animation: canvasIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, #000 100%);
+  mask-image: radial-gradient(circle at center, #000 0%, #000 100%);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 0 0;
+  mask-size: 0 0;
+}
+
+body.is-loaded #marble-canvas {
+  animation:
+    canvasIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    marbleMaskReveal 1.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 #marble-canvas canvas {
@@ -31,6 +44,13 @@
 
 @keyframes canvasIn {
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes marbleMaskReveal {
+  to {
+    -webkit-mask-size: 220% 220%;
+    mask-size: 220% 220%;
+  }
 }
 
 /* ── Glow / Scrim ──────────────────────────────────────────── */

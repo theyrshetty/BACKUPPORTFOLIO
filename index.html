@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/fav.png">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
   <!-- p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script>
@@ -21,13 +21,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Short+Stack&display=swap" rel="stylesheet">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
   <!-- Styles -->
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/hero.css" />
   <link rel="stylesheet" href="styles/about.css" />
   <link rel="stylesheet" href="styles/experience.css" />
   <link rel="stylesheet" href="styles/projects.css">
-  <link rel="stylesheet" href="styles/sideb.css">
+  <link rel="stylesheet" href="styles/research.css">
   <link rel="stylesheet" href="styles/extras.css">
   <link rel="stylesheet" href="styles/contact.css" />
   <link rel="stylesheet" href="styles/floating-icons.css">
@@ -35,12 +40,9 @@
 </head>
 
 <body class="is-loading">
-  <div class="site-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
-    <div class="site-loader__mark" aria-hidden="true">YS</div>
-    <div class="site-loader__copy">
-      <p>Yashas Shetty</p>
-      <div class="site-loader__track" aria-hidden="true"><span></span></div>
-      <span>Loading portfolio</span>
+  <div class="site-loader" role="status" aria-live="polite" aria-label="Yashas Shetty">
+    <div class="site-loader__name" aria-hidden="true">
+      <h1><span>Yashas</span><span>Shetty</span></h1>
     </div>
   </div>
 
@@ -61,16 +63,15 @@
   <!-- Main content — populated by loader.js from manifest -->
   <main id="main"></main>
 
-  <!-- Audio for Side B vinyl (empty src for now) -->
-  <audio id="sideb-audio" preload="none" loop></audio>
-
   <footer>
-    <span>Yashas Shetty</span>
-    <div class="footer__center">
+    <img class="footer__signature" src="assets/svgs/signature.svg" alt="Yashas Shetty signature" width="333" height="200" decoding="async" loading="eager">
+    <div class="footer__details">
       <span>Last updated on 19th July 2026</span>
-      <button type="button" class="footer__back-to-top" aria-controls="top">Back to top</button>
+      <div class="footer__center">
+        <button type="button" class="footer__back-to-top" aria-controls="top">Back to top</button>
+      </div>
+      <span>&copy; Yashas Shetty &middot; Built with p5.js</span>
     </div>
-    <span>&copy; Yashas Shetty &middot; Built with p5.js</span>
   </footer>
 
   <!-- Scripts -->
@@ -84,8 +85,8 @@
   <script src="scripts/about.js"></script>
   <script src="scripts/experience.js" defer></script>
   <script src="scripts/projects.js" defer></script>
-  <script src="scripts/sideb.js" defer></script>
   <script src="scripts/extras.js" defer></script>
   <script src="scripts/contact.js" defer></script>
+  <script src="scripts/footer.js" defer></script>
 </body>
 </html>

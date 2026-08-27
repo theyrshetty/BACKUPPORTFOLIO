@@ -36,7 +36,7 @@ function buildSideBPhoto(filename, index) {
   var frame = document.createElement('div');
   frame.className = 'polaroid__photo';
   var image = document.createElement('img');
-  image.src = 'assets/' + filename;
+  image.src = 'assets/media/' + filename;
   image.alt = 'Gallery photograph';
   image.loading = 'lazy';
   image.decoding = 'async';

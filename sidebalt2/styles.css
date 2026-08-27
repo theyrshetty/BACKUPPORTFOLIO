@@ -1,0 +1,55 @@
+@import url("https://fonts.cdnfonts.com/css/pp-neue-montreal");
+
+@view-transition {
+  navigation: auto;
+}
+
+/* Cross-document View Transition API styling for the B-side entrance. */
+::view-transition-group(root) {
+  animation-duration: 580ms;
+  animation-timing-function: cubic-bezier(.76, 0, .24, 1);
+}
+
+::view-transition-old(root) {
+  animation: bside-page-out 580ms cubic-bezier(.76, 0, .24, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: bside-page-in 580ms cubic-bezier(.76, 0, .24, 1) both;
+}
+
+@keyframes bside-page-out {
+  to { opacity: 0; transform: translateX(-7%) scale(.98); }
+}
+
+@keyframes bside-page-in {
+  from { clip-path: inset(0 0 0 100%); transform: translateX(7%) scale(1.02); }
+  to { clip-path: inset(0); transform: translateX(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) { animation-duration: 0s; }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+section {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
