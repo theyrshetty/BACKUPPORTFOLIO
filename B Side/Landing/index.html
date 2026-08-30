@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Yashas Shetty portfolio landing page" />
+    <title>Yashas Shetty — Home</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Sacramento&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../page-transition.css" />
+  </head>
+  <body>
+    <div class="preloader" aria-hidden="true">
+      <span class="preloader__label">Loading</span>
+      <span class="preloader__count">0</span>
+    </div>
+
+    <header class="site-header">
+      <a class="site-header__name" href="#top">Yashas Shetty</a>
+      <nav class="site-header__nav" aria-label="Primary navigation">
+        <a href="#top">Home,</a>
+        <a href="../About/">About,</a>
+        <a href="#news">News,</a>
+        <a href="#live">Live,</a>
+        <a href="../Listen/">Listen,</a>
+        <a href="../Gallery/">Media.</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="top" aria-label="Introduction">
+        <!-- <p class="hero__eyebrow">New music / live work</p>
+        <h1 class="hero__title">Yashas Shetty</h1>
+        <span class="hero__scroll">Scroll <span>↓</span></span> -->
+      </section>
+
+      <section class="intro" id="news">
+        <p class="intro__headline">New Music Coming Soon...</p>
+      </section>
+
+      <section class="shows" id="live" aria-labelledby="live-heading">
+        <div class="shows__heading">
+          <p class="section-label">Catch me Live</p>
+          <h2 id="live-heading">Upcoming Shows</h2>
+        </div>
+        <div class="shows__list" data-shows-list aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <a class="footer__name" href="#top">Yashas Shetty</a>
+      <nav class="footer__socials" aria-label="Social links">
+        <!-- Replace these URLs with your own profile links. -->
+        <a href="https://www.instagram.com/babithablasters/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a>
+        <a href="YOUR_SPOTIFY_URL" target="_blank" rel="noreferrer">Spotify <span>↗</span></a>
+        <a href="YOUR_YOUTUBE_URL" target="_blank" rel="noreferrer">YouTube <span>↗</span></a>
+      </nav>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+    <script src="../scripts/page-transition.js"></script>
+  </body>
+</html>

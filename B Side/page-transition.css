@@ -1,0 +1,31 @@
+html { background: #171718; }
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--transition-color, #f4f1ed);
+  pointer-events: none;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+body.is-entering > :not(.page-transition) { opacity: 0; }
+body > :not(.page-transition) { transition: opacity .5s ease; }
+body.is-leaving { overflow: hidden; }
+body.is-leaving > :not(.page-transition) {
+  opacity: .5;
+  transform: translateY(-150px) scale(.9);
+  transform-origin: top center;
+  transition: transform 1.2s cubic-bezier(.76, 0, .24, 1), opacity 1.2s cubic-bezier(.76, 0, .24, 1);
+}
+body.is-leaving .page-transition {
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(.76, 0, .24, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body > :not(.page-transition),
+  body.is-leaving > :not(.page-transition),
+  body.is-leaving .page-transition { transition-duration: 0.01ms; }
+}
