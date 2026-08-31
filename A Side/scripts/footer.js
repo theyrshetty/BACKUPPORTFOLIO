@@ -1,8 +1,13 @@
 (() => {
-  const signature = document.querySelector('.footer__signature');
-  if (!signature) return;
+  const foregroundSignature = document.querySelector('.footer__signature--fg');
+  if (!foregroundSignature) return;
 
-  const showSignature = () => signature.classList.add('is-visible');
+  const backgroundSignature = document.querySelector('.footer__signature--bg');
+  if (backgroundSignature && !backgroundSignature.innerHTML.trim()) {
+    backgroundSignature.innerHTML = foregroundSignature.innerHTML;
+  }
+
+  const showSignature = () => foregroundSignature.classList.add('is-visible');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
     showSignature();
     return;
@@ -14,5 +19,5 @@
     observer.disconnect();
   }, { threshold: 0.35 });
 
-  observer.observe(signature);
+  observer.observe(foregroundSignature);
 })();
